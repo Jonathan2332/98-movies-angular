@@ -1,7 +1,7 @@
 # ![](src/assets/imgs/logo-full.png?raw=true "98 Movies")
 Este projeto foi idealizado apenas para fazer parte do meu portfólio como demonstração de experiência e aprendizado.
 
-**[Demonstração do Projeto](https://movies-angular.firebaseapp.com/index)**
+**[Demonstração do Projeto](https://movies-angular-demo.firebaseapp.com/index)**
 
 **[Este projeto também está disponível em PHP](https://github.com/Jonathan2332/98-movies-php)**
 
@@ -17,13 +17,14 @@ Foi criada uma **[API RESTful em PHP](https://github.com/Jonathan2332/api-rest-p
 
 * [API RESTful](https://github.com/Jonathan2332/api-rest-php) (para acessar o banco de dados)
 * [Visual Studio Code](https://visualstudio.microsoft.com/) (IDE)
-* [Firebase](https://firebase.google.com/?hl=pt-BR)(para hostear o projeto)
+* [Firebase](https://firebase.google.com/?hl=pt-BR) (para hostear o projeto)
 
 <hr>
 
 * Angular
 * HTML
 * CSS
+* Javascript
 * Typescript
 * [The Movie DB](https://www.themoviedb.org/)
 * [ViaCEP API](https://viacep.com.br/)
@@ -33,6 +34,7 @@ Foi criada uma **[API RESTful em PHP](https://github.com/Jonathan2332/api-rest-p
 * [ng2-validation](https://www.npmjs.com/package/ng2-validation)
 * [ng2-truncate](https://github.com/yellowspot/ng2-truncate)
 * [ng-select](https://ng-select.github.io/ng-select#/data-sources)
+* [ngx-device-detector](https://www.npmjs.com/package/ngx-device-detector)
 * [Animate.css](https://daneden.github.io/animate.css/)
 * [SweetAlert2](https://sweetalert2.github.io/)
 * [Font Awesome](https://fontawesome.com/)
