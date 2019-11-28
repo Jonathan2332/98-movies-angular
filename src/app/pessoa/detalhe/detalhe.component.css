@@ -1,0 +1,46 @@
+.my-container
+{
+    background-color: white;
+}
+.painel
+{
+    border-color:black;
+}
+.painel-bg-img
+{
+    background-size:     cover;                      
+    background-repeat:   no-repeat;
+    background-position: center center;
+    background-color: rgba(255,255,255,0.85);
+    background-blend-mode: lighten;
+}
+.painel-bg-dark
+{
+    background-color: #262626;
+}
+a.media:link {
+    color: rgb(92,184,92);
+}
+a.media:visited {
+    color: rgb(92,184,92);
+}
+
+a.media:hover {
+    color: rgb(92,184,92);
+}
+
+a.media:active {
+    color: rgb(92,184,92);
+}
+.fade-list {
+    opacity: 0;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+h2
+{
+    font-size: 31px!important;
+}

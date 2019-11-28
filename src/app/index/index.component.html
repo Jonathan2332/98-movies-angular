@@ -1,0 +1,29 @@
+<div class="my-container" [ngStyle]="{'height': isMobile ? '100%' : '100vh'}">
+  <div id="background" *ngIf="!isMobile"></div>
+      <div style="text-align: center"><img id="logo" [ngClass]="{'logoMobile' : isMobile, 'logo': !isMobile}"  src="../../assets/imgs/logo-full.png"></div>
+
+      <div id="infos" class="container text-center text-light" [ngClass]="{'mt-3':isMobile, 'mt-5':!isMobile}" style="max-width: 700px;">
+        <main role="main" class="inner cover">
+          <h2 class="cover-heading"><i class="fas fa-film"></i> Descubra novos filmes</h2>
+          <p class="lead">Veja filmes que ainda serão lançados, mais populares, mais bem avaliados, que ainda estão em cartaz ou explore fazendo seu próprio filtro!</p>
+          
+        </main>
+
+        <hr style="background-color: white;" class="my-4">
+
+        <main role="main" class="inner cover">
+          <h2 class="cover-heading"><i class="fas fa-stream"></i> Faça sua lista</h2>
+          <p class="lead">Gostou de algum filme? Salve nos favoritos ou adicione filmes na sua lista de interesse, veja filmes recomendados e similares!</p>
+        </main>
+
+        <hr style="background-color: white;" class="my-4">
+
+        <main role="main" class="inner cover">
+          <h2 class="cover-heading"><i class="fas fa-info-circle"></i> Veja informações úteis</h2>
+          <p class="lead">Descubra informações técnicas como receita, orçamento, elenco, equipe-técnica, posters, trailers sobre qualquer filme!</p>
+          <p class="lead py-4">
+            <a [routerLink]="['/usuario/login']" routerLinkActive="router-link-active" class="btn btn-lg btn-success"><b>Entrar</b></a>
+          </p>
+        </main>
+  </div><!-- Fechando a Classe Container -->
+</div>

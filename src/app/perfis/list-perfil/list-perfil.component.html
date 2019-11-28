@@ -1,0 +1,48 @@
+<div class="my-container">
+    <app-navbar tema="light">
+        </app-navbar>
+    <div class="container" style="margin-top: 40px;">
+
+        <div class="card" style="border-color: red">
+        <div class="card-header titulo"><fa-icon [icon]="faIdBadge"></fa-icon> Perfis</div>
+            <div class="card-body">
+
+                <a class="btn btn-success" [routerLink]="['/perfis/formulario']" style="color: white">Novo</a>
+                <br>
+                <br>
+                
+                
+                <div class="table-responsive">
+
+                <table id="itens" class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th colspan="2" width="10%" style="text-align: center">Ações</th>
+                                <th>Nome</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of perfis, let i = index">
+                                <td class="text-center">
+                                    <a [routerLink]="['/perfis/formulario', item.idPerfil]">
+                                        <fa-icon [icon]="faEdit" class="text-success"></fa-icon>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <a (click)="check(item.idPerfil, i)" href="javascript:;">
+                                            <fa-icon [icon]="faTrashAlt" class="text-danger"></fa-icon>
+                                    </a>
+                                </td>
+                                <td>{{ item.nome }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                     
+                </div>
+                <div *ngIf="requesting" class="d-flex justify-content-center">
+                    <div id="loader" class="spinner-border" role="status"></div>
+                </div>        
+            </div>
+            </div>
+    </div>
+</div>

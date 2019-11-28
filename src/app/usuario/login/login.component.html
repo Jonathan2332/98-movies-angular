@@ -1,0 +1,48 @@
+<div class="my-container">
+
+  <div style="text-align: center;"><img id="logo" [ngClass]="{'logoMobile' : isMobile, 'logo': !isMobile}" src="../assets/imgs/logo-full.png"></div>
+
+  <div id="painel" class="container" [ngStyle]="{'margin-top': isMobile ? '30px' : '70px'}" style="max-width: 600px;">
+
+    <div class="card" style="border: none">
+      <div id="header" class="card-header" [ngClass]="{'loginMobile' : isMobile, 'login': !isMobile}">Entrar</div>
+      <div class="card-body">
+
+        <form class="form-horizontal" method="post" [formGroup]="formulario" (ngSubmit)="onSubmit()" >
+          <div class="form-group">
+            <label for="email">Email</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><fa-icon [icon]="faAt"></fa-icon></span>
+              </div>
+              <input type="email" class="form-control" id="email" formControlName="email" placeholder="Insira o email" [ngClass]="aplicaCssErro('email')">
+              <div *ngIf="checkError('email')" class="invalid-feedback">{{ checkMessage('email')}}</div>
+            </div>
+            
+          </div>
+          <div class="form-group">
+            <label for="password">Senha</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><fa-icon [icon]="faLock"></fa-icon></span>
+              </div>
+              <input type="password" class="form-control" id="password" formControlName="password" aria-describedby="securityMsg" [ngClass]="aplicaCssErro('password')" placeholder="Insira a senha">
+              <div *ngIf="checkError('password')" class="invalid-feedback">{{ checkMessage('password')}}</div>
+            </div>
+            <small id="securityMsg" class="form-text text-muted">Nunca compartilhe seu email e senha com ninguém.</small>
+          </div>
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="alwaysConnected" formControlName="keepLoged">
+            <label class="form-check-label" for="alwaysConnected">Matenha-me conectado</label>
+          </div>
+          <button type="submit" class="btn btn-success" [disabled]="verificando"><span *ngIf="verificando" id="loader-cep" class="spinner-border text-light spinner-border-sm" role="status"></span> Entrar</button>
+          <div style="display: inline;" class="pl-2">
+            <button routerLink="/usuario/cadastro" type="button" class="btn btn-success">Cadastrar-se</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+    
+  </div><!-- Fechando a Classe Container -->
+</div>

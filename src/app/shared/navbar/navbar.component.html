@@ -1,0 +1,82 @@
+<div [ngClass]="{
+        'navbar-bg-custom-dark': tema == 'dark',
+        'navbar-bg-custom-light': tema == 'light'
+    }">
+</div>
+
+<nav id="navbar" class="navbar navbar-expand-lg navbar-dark rounded custom-navbar" [attr.value]="tema" [ngClass]="checkTheme()" [ngStyle]="checkBackground()">
+  <img src="../assets/imgs/logo-simple.png" width="56" height="56">
+  <button id="button-toggle" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto mx-2">
+        
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/usuario/home']" routerLinkActive="router-link-active"><fa-icon [icon]="faHome"></fa-icon> Início</a>
+      </li>
+      <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="filmesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <fa-icon [icon]="faFilm"></fa-icon> Filmes
+                </a>
+                <div class="dropdown-menu" aria-labelledby="filmesDropdown">
+            		<a class="dropdown-item" [routerLink]="['/filme/explorar']" routerLinkActive="router-link-active">Explorar</a>
+                  	<a class="dropdown-item" [routerLink]="['/usuario/home']" routerLinkActive="router-link-active">Populares</a>
+                  	<a class="dropdown-item" [routerLink]="['/usuario/home', 'avaliados']" routerLinkActive="router-link-active">Mais bem avaliados</a>
+                  	<a class="dropdown-item" [routerLink]="['/usuario/home', 'lancamentos']" routerLinkActive="router-link-active">Próximos lançamentos</a>
+                  	<a class="dropdown-item" [routerLink]="['/usuario/home', 'cartaz']" routerLinkActive="router-link-active">Em cartaz</a>
+                </div>
+            </li>
+      <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <fa-icon [icon]="faBars"></fa-icon> Categorias
+        </a>
+        <div id="nav-cat" class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <button *ngFor="let item of categorias" class="dropdown-item" type="submit" name="id" [routerLink]="['/categoria', item.id]" routerLinkActive="router-link-active">
+              {{ item.name }}</button>
+        </div>
+      </li>
+      <li class="nav-item active">
+			<a class="nav-link" [routerLink]="['/pessoa']" routerLinkActive="router-link-active"><fa-icon [icon]="faUsers"></fa-icon> Pessoas</a>
+      </li>
+      <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <fa-icon [icon]="faUserCircle"></fa-icon> {{ nome }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="perfilDropdown">
+                  <a class="dropdown-item" [routerLink]="['/usuario/perfil']" routerLinkActive="router-link-active">Meu perfil</a>
+                  <a class="dropdown-item" [routerLink]="['/usuario/lista','favoritos']" routerLinkActive="router-link-active">Meus favoritos</a>
+                  <a class="dropdown-item" [routerLink]="['/usuario/lista','interesses']" routerLinkActive="router-link-active">Lista de interesses</a>
+                  <div *ngIf="perfil == 2">
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" [routerLink]="['/perfis']" routerLinkActive="router-link-active">Gerenciar Perfis</a>
+                    <!-- <a class="dropdown-item" [routerLink]="['/pagina']" routerLinkActive="router-link-active">Gerenciar Páginas</a> -->
+                    <a class="dropdown-item" [routerLink]="['/usuario/gerenciar']" routerLinkActive="router-link-active">Gerenciar Usuários</a>
+                  </div>
+                </div>
+            </li>
+      <li class="nav-item active">
+        <a class="nav-link" (click)="logoff()" [routerLink]="null" routerLinkActive="router-link-active"><fa-icon [icon]="faSignOutAlt"></fa-icon> Sair</a>
+      </li>
+    </ul>
+    <div class="form-inline my-2 my-lg-0 mx-2" >
+      <input #field class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar" name="busca" [id]="busca" maxlength="50" required>
+
+      <div class="dropdown">
+        <button id="button-search" class="btn my-2 my-sm-0 dropdown-toggle" 
+          type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [ngClass]="{
+              'btn-outline-light': isCollapsed || (isRolledOut && !isCollapsed),
+              'btn-success': !isCollapsed && !isRolledOut
+          }">
+          <fa-icon [icon]="faSearch"></fa-icon> Buscar
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <button class="dropdown-item" type="button" name="type" (click)="redirect(true)" >Filmes</button>
+          <button class="dropdown-item" type="button" name="type" (click)="redirect(false)" >Pessoas</button>
+        </div>
+      </div>
+
+  </div>
+  </div>
+</nav>

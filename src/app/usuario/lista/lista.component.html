@@ -1,0 +1,48 @@
+<div class="my-container">
+    <app-navbar tema="light">
+        </app-navbar>
+    <div class="container" style="margin-top: 40px;">
+        <div class="card" [style.borderColor]="type == 'favoritos' ? 'red' : '#007bff'">
+            <div class="card-header" style="font-size: 30px; color:white!important; border-color: white!important;" [style.backgroundColor]="type == 'favoritos' ? 'red' : '#007bff'">
+            <fa-icon [icon]="type == 'favoritos' ? faHeart : faBookmark"></fa-icon> Lista de {{ type }}</div>
+            <div class="card-body">
+                <table id="itens" class="table table-hover" [class.table-sm]="isMobile">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th colspan="2" width="10%" class="text-center">Ações</th>
+                            <th>Filme</th>
+                            <th class="text-center">Ano</th>
+                            <th class="text-center"><fa-icon [icon]="faStar"></fa-icon></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of items, let i = index">
+                            <td class="text-center">
+                                <a (click)="salvar(item.id, item?.checked ? false : item.checked, i)" href="javascript:;">
+                                    <fa-icon [icon]="(item.checked === 'undefined' ? false : item.checked) ? faCheck : (type == 'favoritos' ? faBookmark : faHeart)" [ngClass]="checkColor(item.checked)" ></fa-icon>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="javascript:;" (click)="check(item.id, i)">
+                                    <fa-icon [icon]="faTimes" class="text-danger"></fa-icon>
+                                </a>
+                            </td>
+                            <td>
+                                <a [routerLink]="['/filme', item.id]" style="color: black; font-weight: bold;">{{ item.title }}</a>
+                            </td>
+                            <td class="text-center">
+                                    {{ item.release_date | date: 'yyyy' }}
+                            </td>
+                            <td class="text-center">
+                                    {{ item.vote_average }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="requesting" class="d-flex justify-content-center">
+                    <div id="loader" class="spinner-border" role="status" [ngClass]="{ 'text-danger' : type == 'favoritos', 'text-primary' : type == 'interesses'}"></div>
+                </div>       
+            </div>
+        </div>
+    </div><!-- Fechando a Classe Container -->
+</div>

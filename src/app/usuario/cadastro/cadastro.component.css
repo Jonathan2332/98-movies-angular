@@ -1,0 +1,23 @@
+.cadastro
+{
+    color:white!important;
+    font-size: 45px;
+    background-color: rgb(92,184,92)!important;
+    border-color: white!important;
+}
+.cadastroMobile
+{
+    color:white!important;
+    font-size: 25px;
+    background-color: rgb(92,184,92)!important;
+    border-color: white!important;
+}
+.my-container{
+    background-color: white!important;
+ }
+
+.has-error .form-control > .selectpicker {
+    border-color: #a94442;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}

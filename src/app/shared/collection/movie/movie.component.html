@@ -1,0 +1,17 @@
+<div class="card-deck d-flex justify-content-center">
+    <div *ngFor="let item of list, let i = index" class="col-sm-6 col-lg-3 pb-4" style="color: white; text-align: center;" >
+        
+        <a [routerLink]="['/filme', item.id]" style="text-decoration: none;">
+            <div class="loader-image" id="loader-{{ item.id }}-{{ idType }}">
+                <img src="{{ getImage(item.poster_path) }}" style="max-width: 250px; border: white solid 1px;" height="390" class="card-img rounded" (load)="onLoad(item.id)">
+            </div>
+            <h5 class="pt-2" style="color: rgb(92,184,92);">{{ item.title }}</h5>
+        </a>
+        <p class="lead">
+        {{ (item.overview ? item.overview : 'Sinopse não disponível em PT-BR') | truncate : 150 : "..." }}
+        </p>
+    </div>
+    <div class="text-center"  *ngIf="!list?.length && !requesting">
+        <h4><b style="color: #5bc0de"><fa-icon [icon]="faInfoCircle" style="color: #5bc0de"></fa-icon> Nenhum resultado encontrado.</b></h4>
+    </div>
+</div>

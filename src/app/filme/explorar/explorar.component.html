@@ -1,0 +1,58 @@
+<div class="my-container">
+    <app-navbar tema="dark">
+        </app-navbar>
+    <div class="form-group">
+        <div class="card painel-bg">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <h2 style="color:white;">Descobrir novos filmes</h2>
+                        <hr style="background-color: white">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label style="color: white">Ano</label><br>
+                                    <ng-select [searchable]="true" id="ano" placeholder="Selecione" [(ngModel)]="selectedAno" [clearable]="false">
+                                        <ng-option *ngFor="let ano of anos" value="{{ ano }}">{{ ano }}</ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label style="color: white">Ver por</label><br>
+                                    <ng-select [items]="sort"
+                                            bindLabel="name"
+                                            bindValue="value"
+                                            placeholder="Selecione"
+                                            [clearable]="false"
+                                            [closeOnSelect]="true"
+                                            [(ngModel)]="selectedSort"
+                                            >
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label style="color: white">Gêneros</label><br>
+                                    <ng-select [items]="categorias"
+                                            bindLabel="name"
+                                            bindValue="id"
+                                            placeholder="Selecione"
+                                            [multiple]="true"
+                                            [closeOnSelect]="false"
+                                            [searchable]="true"
+                                            [(ngModel)]="selectedGenres"
+                                            >
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <app-collection typeCollection="explorar" [paramAno]="selectedAno" [paramMultipleGenre]="selectedGenres" [paramSortBy]="selectedSort"></app-collection>
+                    </div>
+                </div>
+            </div> <!-- FECHANDO PAINEL BODY -->
+        </div><!-- FECHANDO PRIMARY PANEL -->
+	</div><!-- FECHANDO FORM GROUP -->
+</div>

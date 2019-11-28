@@ -1,0 +1,163 @@
+<div class="my-container">
+  <div style="background-image: linear-gradient(rgb(92,184,92), #fff); text-align: center;">
+      <img id="logo" [ngClass]="{'logoMobile' : isMobile, 'logo': !isMobile}" src="../assets/imgs/logo-full.png">
+  </div>
+
+    <div class="container" style="margin-top: 40px;">
+
+      <div class="card" style="border-color: green;">
+        <div id="header" class="card-header"  [ngClass]="{'cadastroMobile' : isMobile, 'cadastro': !isMobile}">Cadastro</div>
+            <div class="card-body">
+              
+              <form [formGroup]="formulario" (ngSubmit)="onSubmit()" method="post">
+              <input type="number" formControlName="idPerfil" id="idPerfil" hidden/>
+              <input type="number" formControlName="cont_adulto" id="cont_adulto" hidden/>
+              <div class="form-group">
+
+                <label style="font-size: 20px; color:green; "><fa-icon [icon]="faUser"></fa-icon> Dados Pessoais</label><br />
+                
+                <label>Por favor, insira seus dados abaixo para realizar seu cadastro.</label><br /><br />
+                <div class="row">
+                  <div class="col-12 col-sm-6">
+                    <label for="nome">Nome: </label>
+                      <input type="text" class="form-control" formControlName="nome" id="nome" [ngClass]="aplicaCssErro('nome')"/>
+                      <div *ngIf="checkError('nome')" class="invalid-feedback">{{ checkMessage('nome')}}</div>
+                    <br />
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <label for="sobrenome">Sobrenome: </label>
+                    <input type="text" class="form-control" formControlName="sobrenome" id="sobrenome" [ngClass]="aplicaCssErro('sobrenome')"/>
+                    <div *ngIf="checkError('sobrenome')" class="invalid-feedback">{{ checkMessage('sobrenome')}}</div>
+                    <br />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12 col-sm-6" id="datepicker">
+                    <label for="data_nasc">Data de Nascimento: </label>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="dd/mm/yyyy" [minDate]="{year: 1985, month: 1, day: 1}"
+                        [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" [placement]="placement" [positionTarget]="buttonEl"
+                        [displayMonths]="displayMonths" [navigation]="navigation" [outsideDays]="outsideDays" [showWeekNumbers]="showWeekNumbers"
+                        formControlName="data_nasc" id="data_nasc" [ngClass]="aplicaCssErro('data_nasc')"/>
+                        <div class="input-group-append">
+                          <button #buttonEl class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><fa-icon [icon]="faCalendarAlt"></fa-icon></button>
+                        </div>
+                        
+                        <div *ngIf="checkError('data_nasc')" class="invalid-feedback">{{ checkMessage('data_nasc')}}</div>
+                    </div>
+                    <br *ngIf="isMobile">
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <label for="sexo">Sexo: </label>
+
+                    <ng-select appearance="outline" [searchable]="false" formControlName="sexo" id="sexo" placeholder="Selecione">
+                      <ng-option value="M">Masculino</ng-option>
+                      <ng-option value="F">Feminino</ng-option>
+                      <ng-option value="O">Outros</ng-option>
+                    </ng-select>
+                    <div *ngIf="checkError('sexo')" class="invalid-feedback d-block">{{ checkMessage('sexo')}}</div>
+                  </div>
+                </div>
+                
+                <br />
+                
+                <div class="row">
+                  <div class="col-12 col-sm-6">
+                    <label for="celular">Celular: </label>
+                      <input type="text" class="form-control" formControlName="celular" id="celular" mask="(00)00000-0000" [dropSpecialCharacters]="false" [showMaskTyped]="true" [ngClass]="aplicaCssErro('celular')"/>
+                      <div *ngIf="checkError('celular')" class="invalid-feedback">{{ checkMessage('celular')}}</div>
+                    <br />
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <label for="telefone">Telefone: </label>
+                      <input type="text" class="form-control" formControlName="telefone" id="telefone" mask="(00)0000-0000" [dropSpecialCharacters]="false" [showMaskTyped]="true" [ngClass]="aplicaCssErro('telefone')"/>
+                      <div *ngIf="checkError('telefone')" class="invalid-feedback">{{ checkMessage('telefone')}}</div>
+                    <br />
+                  </div>
+                </div>
+
+                <label for="email">Email: </label>
+                  <input type="email" class="form-control" formControlName="email" id="email" [ngClass]="aplicaCssErro('email')" />
+                  <div *ngIf="checkError('email')" class="invalid-feedback">{{ checkMessage('email')}}</div>
+                <br />
+
+                <div class="row">
+                  <div class="col-12 col-sm-6">
+                    <label for="senha">Senha: </label>
+                      <input type="password" class="form-control" formControlName="senha" id="senha" [ngClass]="aplicaCssErro('senha')"/>
+                      <div *ngIf="checkError('senha')" class="invalid-feedback">{{ checkMessage('senha')}}</div>
+                    <br/>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <label for="csenha">Repita a senha: </label>
+                      <input class="form-control" type="password" formControlName="csenha" id="csenha" [ngClass]="aplicaCssErro('csenha')"/>
+                      <div *ngIf="checkError('csenha')" class="invalid-feedback">{{ checkMessage('csenha')}}</div>
+                    <br />
+                  </div>
+                </div>
+                <label for="categoria">Gêneros Favoritos: </label>
+
+                <ng-select [items]="categorias"
+                          bindLabel="name"
+                          bindValue="id"
+                          placeholder="Selecione"
+                          [loading]="categorias ? false : true"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [searchable]="true"
+                          formControlName="categoria">
+                </ng-select>
+                <div *ngIf="checkError('categoria')" class="invalid-feedback d-block">{{ checkMessage('categoria')}}</div>
+                <br />
+
+                <label style="font-size: 20px; color:green"><fa-icon [icon]="faMapMarkerAlt"></fa-icon> Endereço</label><br />
+                <label>Por favor, insira os dados do seu endereço.</label><br><br>
+                <div class="row">
+                  <div class="col-12 col-sm-6">
+
+                    <label for="cep">CEP: </label>
+                      <div class="input-group">
+                        <input type="text" class="form-control" formControlName="cep" id="cep" mask="00000-000" [dropSpecialCharacters]="false" [showMaskTyped]="true" [ngClass]="aplicaCssErro('cep')"/>
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-success" type="button" id="button-cep" (click)="checkCep()"><span *ngIf="loader" id="loader-cep" class="spinner-border text-dark spinner-border-sm" role="status"></span> Buscar</button>
+                        </div>
+                        <div *ngIf="checkError('cep')" class="invalid-feedback">{{ checkMessage('cep')}}</div>
+                      </div>
+                    <br>
+
+                    <label for="localidade">Cidade: </label>
+                      <input class="form-control" type="text" formControlName="localidade" id="localidade" [ngClass]="aplicaCssErro('localidade')"/>
+                      <div *ngIf="checkError('localidade')" class="invalid-feedback">{{ checkMessage('localidade')}}</div>
+                    <br />
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <label for="uf">Estado: </label>
+                      <input class="form-control" type="text" formControlName="uf" id="uf" [ngClass]="aplicaCssErro('uf')"/>
+                      <div *ngIf="checkError('uf')" class="invalid-feedback">{{ checkMessage('uf')}}</div>
+                    <br />
+
+                    <label for="bairro">Bairro: </label>
+                      <input class="form-control" type="text" formControlName="bairro" id="bairro" [ngClass]="aplicaCssErro('bairro')"/>
+                      <div *ngIf="checkError('bairro')" class="invalid-feedback">{{ checkMessage('bairro')}}</div>
+                    <br />
+                  </div>
+                </div>
+
+                <label for="complemento">Complemento: </label>
+                  <input class="form-control" type="text" formControlName="complemento" id="complemento"/>
+                <br />
+
+                
+                <div style="text-align: center;"><button type="submit" class="btn btn-success btn-lg">Continuar</button>
+                    <div style="display: inline;" class="pl-2">
+                        <a routerLink="/usuario/login" class="btn btn-success btn-lg">Voltar</a>
+                    </div>
+                </div>
+              </div>
+            </form>
+          </div>
+      </div>
+    
+  </div>
+</div><!-- Fechando a Classe Container -->

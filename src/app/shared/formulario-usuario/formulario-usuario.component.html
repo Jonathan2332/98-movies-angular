@@ -1,0 +1,227 @@
+<div class="my-container">
+        <div class="container">
+            <div class="card" [class.bg-dark]="!isAdmin" [style.border-color]="isAdmin ? 'red' : ''">
+                <div *ngIf="isAdmin" class="card-header painel"><fa-icon [icon]="faUserEdit"></fa-icon> Editar Usuário</div>
+                <div class="card-body" [style.color]="isAdmin ? 'black' : 'white'">
+                
+                    <form enctype="multipart/form-data" [formGroup]="formulario" (ngSubmit)="onSubmit()" method="post">
+            
+                        <div class="form-group" [ngClass]="{'text-white': !isAdmin, 'text-dark':isAdmin}">
+            
+                            <input type="number" formControlName="idUsuario" id="idUsuario" hidden/>
+                            <input type="number" formControlName="idPerfil" id="idPerfil" hidden/>
+                            <input type="number" formControlName="idEndereco" id="idEndereco" hidden/>
+            
+                            <h2 *ngIf="!isAdmin">Detalhes da sua conta</h2>
+                            <h4 [style.color]="isAdmin ? 'red' : 'rgb(92,184,92)'"><fa-icon [icon]="faUser"></fa-icon> Dados Pessoais</h4>
+                            <hr [style.background-color]="isAdmin ? 'black' : 'white'">
+            
+                            <div class="row">
+                                <div id="colPhoto" class="col-12" style="text-align: center;">
+                                    <img src="{{ usuario.caminho }}" class="rounded-circle w-150" height="250" width="250">
+                                </div>
+                                <div id="colUpload" class="col-12 text-center">
+                                    <br>
+                                    <div id="layoutButtonUpload">
+                                        <button type="button" class="btn btn-success btn-lg" id="fotoUpload" (click)="fileSelect.click()" [disabled]="isDisabled"><fa-icon [icon]="faCamera"></fa-icon> Carregar Foto</button>
+                                        <input type="file" id="foto" formControlName="foto" accept="image/png, image/jpeg" #fileSelect hidden (change)="onFileChanged($event)">
+                                    <br>
+                                    <br>
+                                    <span>Tamanho máximo 1MB e tipo .jpg, .jpeg ou .png</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+            
+                            <div class="row">
+                                <div class="col-12" [ngClass]="{'col-sm-6':!isAdmin,'col-sm-4':isAdmin}" >
+                
+                                    <label for="nome"><b>Nome: </b></label>
+                                        <input type="text" class="form-control" formControlName="nome" id="nome" [ngClass]="aplicaCssErro('nome')" [readOnly]="isDisabled"/>
+                                        <div *ngIf="checkError('nome')" class="invalid-feedback">{{ checkMessage('nome')}}</div>
+                                    <br />
+                
+                                </div>
+                                <div class="col-12 col-sm-6" [ngClass]="{'col-sm-6':!isAdmin,'col-sm-4':isAdmin}">
+                                    <label for="sobrenome"><b>Sobrenome: </b></label>
+                                        <input type="text" class="form-control" formControlName="sobrenome" id="sobrenome" [ngClass]="aplicaCssErro('sobrenome')" [readOnly]="isDisabled"/>
+                                        <div *ngIf="checkError('sobrenome')" class="invalid-feedback">{{ checkMessage('sobrenome')}}</div>
+                                    <br />
+                                </div>
+
+                                <div class="col-12 col-sm-4" *ngIf="isAdmin">
+                                    <label for="preferencias"><b>Perfil: </b></label>
+                                    <ng-select [items]="perfis"
+                                                bindLabel="nome"
+                                                bindValue="idPerfil"
+                                                placeholder="Selecione"
+                                                [loading]="perfis ? false : true"
+                                                [multiple]="false"
+                                                [closeOnSelect]="true"
+                                                [searchable]="false"
+                                                [readonly]="isDisabled"
+                                                [clearable]="false"
+                                                formControlName="idPerfil">
+                                    </ng-select>
+                                </div>
+                            </div>
+            
+            
+            
+                            <div class="row">
+                                <div class="col-12 col-sm-6" id="datepicker">
+                                    <label for="data_nasc"><b>Data de Nascimento: </b></label>
+                                    <div class="input-group">
+                                        <input class="form-control" placeholder="dd/mm/yyyy" [minDate]="{year: 1985, month: 1, day: 1}"
+                                        ([ngModel])="model" ngbDatepicker #d="ngbDatepicker" [placement]="placement" [positionTarget]="buttonEl"
+                                        [displayMonths]="displayMonths" [navigation]="navigation" [outsideDays]="outsideDays" [showWeekNumbers]="showWeekNumbers"
+                                        formControlName="data_nasc" id="data_nasc" [ngClass]="aplicaCssErro('data_nasc')" [readOnly]="isDisabled"/>
+                                        <div class="input-group-append">
+                                            <button #buttonEl class="btn btn-secondary" (click)="d.toggle()" type="button" [disabled]="isDisabled"><fa-icon [icon]="faCalendarAlt"></fa-icon></button>
+                                        </div>
+                                        <div *ngIf="checkError('data_nasc')" class="invalid-feedback">{{ checkMessage('data_nasc')}}</div>
+                                    </div>
+                                    <br *ngIf="isMobile">
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <label for="genero"><b>Sexo: </b></label>
+                
+                                    <ng-select appearance="outline" [searchable]="false" formControlName="sexo" id="sexo" placeholder="Selecione" [clearable]="false" [readonly]="isDisabled">
+                                        <ng-option value="M">Masculino</ng-option>
+                                        <ng-option value="F">Feminino</ng-option>
+                                        <ng-option value="O">Outros</ng-option>
+                                    </ng-select>
+                                    <div *ngIf="checkError('sexo')" class="invalid-feedback d-block">{{ checkMessage('sexo')}}</div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                <label for="celular"><b>Celular: </b></label>
+                                    <input type="text" class="form-control" formControlName="celular" id="celular" mask="(00)00000-0000" [dropSpecialCharacters]="false" [showMaskTyped]="true" [ngClass]="aplicaCssErro('celular')" [readOnly]="isDisabled"/>
+                                    <div *ngIf="checkError('celular')" class="invalid-feedback">{{ checkMessage('celular')}}</div>
+                                    <br *ngIf="isMobile">
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                <label for="telefone"><b>Telefone: </b></label>
+                                    <input type="text" class="form-control" formControlName="telefone" id="telefone" mask="(00)0000-0000" [dropSpecialCharacters]="false" [showMaskTyped]="true" [ngClass]="aplicaCssErro('telefone')" [readOnly]="isDisabled"/>
+                                    <div *ngIf="checkError('telefone')" class="invalid-feedback">{{ checkMessage('telefone')}}</div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div [ngClass]="{'col-sm-12' : !isDisabled, 'col-12 col-sm-6' : isDisabled}">
+                
+                                    <label for="email"><b>Email: </b></label>
+                                        <input type="email" class="form-control" formControlName="email" id="email" [ngClass]="aplicaCssErro('email')" [readOnly]="isDisabled"/>
+                                        <div *ngIf="checkError('email')" class="invalid-feedback">{{ checkMessage('email')}}</div>
+                                        <br *ngIf="isMobile || !isDisabled">
+
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <label for="senha"><b>Senha: </b></label>
+                                    <input type="password" class="form-control" formControlName="senha" id="senha" [ngClass]="aplicaCssErro('senha')" [readOnly]="isDisabled"/>
+                                    <div *ngIf="checkError('senha')" class="invalid-feedback">{{ checkMessage('senha')}}</div>
+                                    <br *ngIf="isMobile && !isDisabled">
+                                </div>
+                    
+                                <div class="col-12 col-sm-6" *ngIf="!isDisabled">
+                                    <label for="csenha"><b>Repita a senha: </b></label>
+                                    <input class="form-control" type="password" formControlName="csenha" id="csenha" [ngClass]="aplicaCssErro('csenha')" [readOnly]="isDisabled"/>
+                                    <div *ngIf="checkError('csenha')" class="invalid-feedback">{{ checkMessage('csenha')}}</div>
+                                </div>
+            
+                            </div>
+                            <br>
+            
+                            <div class="row">
+                            <div [ngClass]="{ 'col-12 col-sm-6' : usuario.idade >= 18 , 'col-12 col-sm-12': usuario.idade < 18 }" >
+            
+                                <label for="categoria"><b>Gêneros Favoritos: </b></label>
+
+                                <ng-select [items]="categorias"
+                                          bindLabel="name"
+                                          bindValue="id"
+                                          placeholder="Selecione"
+                                          [loading]="categorias ? false : true"
+                                          [multiple]="true"
+                                          [closeOnSelect]="false"
+                                          [searchable]="true"
+                                          [readonly]="isDisabled"
+                                          formControlName="categoria">
+                                </ng-select>
+                                <div *ngIf="checkError('categoria')" class="invalid-feedback d-block">{{ checkMessage('categoria')}}</div>
+                                <br />
+                            </div>
+            
+                            <div class="col-12 col-sm-6" [ngStyle]="{'display': usuario.idade >= 18 ? 'inline-block' : 'none'}">
+                                <label for="preferencias"><b>Conteúdo Adulto: </b></label>
+                                <ng-select appearance="outline" [searchable]="false" formControlName="cont_adulto" id="cont_adulto" placeholder="Selecione" [clearable]="false" [readonly]="isDisabled">
+                                    <ng-option value="1">Exibir</ng-option>
+                                    <ng-option value="0">Não exibir</ng-option>
+                                </ng-select>
+                            </div>
+                            </div>
+            
+                            <br />
+            
+                            <h4 [style.color]="isAdmin ? 'red' : 'rgb(92,184,92)'"><fa-icon [icon]="faMapMarkerAlt"></fa-icon> Endereço</h4>
+                            <hr [style.background-color]="isAdmin ? 'black' : 'white'">
+            
+                            <div class="row">
+                            <div class="col-12 col-sm-6">
+            
+                                <label for="cep"><b>CEP: </b></label>
+            
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="cep" id="cep" mask="00000-000" [dropSpecialCharacters]="false" [showMaskTyped]="true" [ngClass]="aplicaCssErro('cep')" [readOnly]="isDisabled"/>
+                                    <div class="input-group-append">
+                                      <button class="btn btn-success" type="button" id="button-cep" (click)="checkCep()" [disabled]="isDisabled"><span *ngIf="loader" id="loader-cep" class="spinner-border text-light spinner-border-sm" role="status"></span> Buscar</button>
+                                    </div>
+                                    <div *ngIf="checkError('cep')" class="invalid-feedback">{{ checkMessage('cep')}}</div>
+                                </div>
+                                <br>
+                                <label for="localidade"><b>Cidade: </b></label>
+                                    <input class="form-control" type="text" formControlName="localidade" id="localidade" [ngClass]="aplicaCssErro('localidade')" [readOnly]="isDisabled"/>
+                                    <div *ngIf="checkError('localidade')" class="invalid-feedback">{{ checkMessage('localidade')}}</div>
+                                    <br *ngIf="isMobile">
+                            </div>
+
+                            <div class="col-12 col-sm-6">
+                                <label for="uf"><b>Estado: </b></label>
+                                    <input class="form-control" type="text" formControlName="uf" id="uf" [ngClass]="aplicaCssErro('uf')" [readOnly]="isDisabled"/>
+                                    <div *ngIf="checkError('uf')" class="invalid-feedback">{{ checkMessage('uf')}}</div>
+                                <br>
+                                <label for="bairro"><b>Bairro: </b></label>
+                                    <input class="form-control" type="text" formControlName="bairro" id="bairro" [ngClass]="aplicaCssErro('bairro')" [readOnly]="isDisabled"/>
+                                    <div *ngIf="checkError('bairro')" class="invalid-feedback">{{ checkMessage('bairro')}}</div>
+                                <br>
+                            </div>
+            
+                            </div>
+                            <label for="complemento"><b>Complemento: </b></label>
+                                <input class="form-control" type="text" formControlName="complemento" id="complemento" [readOnly]="isDisabled"/>
+                            <br />
+                            <br>
+            
+                            <div *ngIf="!isAdmin && isDisabled" style="text-align: center;">
+                                <button (click)="isDisabled = !isDisabled" type="button" class="btn btn-success btn-lg" ><fa-icon [icon]="faUserEdit"></fa-icon> Editar</button>
+                            </div>
+            
+            
+            
+                            <div *ngIf="!isDisabled" style="text-align: center;">
+                                <button type="submit" class="btn btn-success btn-lg mx-3"><fa-icon [icon]="faCheck"></fa-icon> Salvar</button>
+            
+                                <button (click)="onCancel()" type="button" class="btn btn-danger btn-lg mx-2"><fa-icon [icon]="faTimes"></fa-icon> Cancelar</button>
+                            </div>
+            
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+</div><!-- Fechando a Classe Container -->
+
+      

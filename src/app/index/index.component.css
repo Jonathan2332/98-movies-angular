@@ -1,0 +1,24 @@
+.my-container
+{
+    background-image: linear-gradient(#262626, rgba(0,0,0, 0.7), #262626);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-attachment: fixed;
+    width: 100%;
+}
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../assets/imgs/bg-index.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    opacity: 0.3;
+    filter:alpha(opacity=30);
+    z-index:-1;
+}

@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "movies-angular-demo"
+  },
+  "targets": {
+    "movies-angular-demo": {
+      "hosting": {
+        "angular": [
+          "movies-angular-demo"
+        ]
+      }
+    }
+  }
+}

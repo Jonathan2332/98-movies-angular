@@ -1,0 +1,352 @@
+<div class="my-container">
+        <app-navbar tema="light">
+            </app-navbar>
+    <div class="container">
+        <div class="card painel">
+            <div class="painel-bg-img" [style.background]="background" >
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-5 col-lg-4">
+                                <img src="{{ getImage(movie.poster_path, 500) }}" style="margin-top: 15px; width: 225px; height: 350px; text-align: center;" class="img-rounded">
+                            </div>
+                            <div class="col-md-7 col-lg-8">
+                                <h1>{{ movie.title }} ({{ (movie.release_date | date: 'yyyy') }})</h1>
+                                <div style="font-size: 20px;">
+                                    <fa-icon [icon]="faFilm"></fa-icon>
+                                    <div *ngIf="!movie.genres?.length" style="display: inline;"> {{ unavailable }}</div>
+                                    <div *ngFor="let genre of movie.genres, let i = index" style="display: inline;">
+                                        <div *ngIf="i == 0" style="display: inline;">
+                                            <a class="media" style="display: inline;"  >
+                                                {{ genre.name }}
+                                            </a>
+                                        </div>
+                                        <div *ngIf="i != 0" style="display: inline;">
+                                        | <a class="media" style="display: inline;" >
+                                            {{ genre.name }}
+                                        </a>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <fa-icon [icon]="faClock"></fa-icon> {{ movie.runtime?.length ? unavailable : convertMins(movie.runtime) }}
+                                    <br>
+                                    <fa-icon [icon]="faStar"></fa-icon> {{ movie.vote_average }}
+                                </div>
+                                <h2>Sinopse</h2>
+                                <div *ngIf="movie.overview.length == 0">
+                                        <fa-icon [icon]="faInfoCircle" style="color: #5bc0de"></fa-icon>
+                                        <b style="color: #5bc0de"> Não há dados sobre a sinopse deste filme.</b>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" >
+                                        <p>{{ movie.overview }}</p>
+                                        <button (click)="salvar(movie.id, 'favoritos')" 
+                                            type="button" class="btn btn-outline-danger mr-2" >
+                                            <fa-icon [icon]="movie.favorito ? faCheck : faHeart"></fa-icon> Adic. aos favoritos</button>
+
+                                        <button (click)="salvar(movie.id, 'interesses')" 
+                                            type="button" class="btn btn-outline-primary">
+                                            <fa-icon [icon]="movie.interesse ? faCheck : faBookmark"></fa-icon> Adic. à lista de interesse</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card painel">
+            <div class="painel-bg-dark">
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6" style="color: white">
+                                <h2><fa-icon [icon]="faInfoCircle"></fa-icon> Informações</h2>
+                                <hr style="background-color: white" />
+                                
+                                <h5 style="display: inline;">Titulo original</h5>
+                                <h6 style="color: rgb(92,184,92);">{{ movie.original_title }}</h6>
+
+                                <h5 style="display: inline;">Situação</h5>
+                                <h6 style="color: rgb(92,184,92);">{{ movie.status }}</h6>
+
+                                <h5 style="display: inline;">Data de Lançamento</h5>
+                                <h6 style="color: rgb(92,184,92);">{{ movie.release_date | date: 'dd/MM/yyyy' }}</h6>
+
+                                <h5 style="display: inline;">Orçamento</h5>
+                                <h6 [ngStyle]="{'color': movie.budget == 0 ? '#ffbb33' : '#5CB85C' }">{{ (movie.budget == 0 ? unavailable : (movie.budget | currency))  }}</h6>
+
+                                <h5 style="display: inline;">Receita</h5>
+                                <h6 [ngStyle]="{'color': movie.revenue == 0 ? '#ffbb33' : '#5CB85C' }">{{ (movie.revenue == 0 ? unavailable : (movie.revenue | currency)) }}</h6>
+            
+                            </div>
+
+                            <div class="col-sm-6" style="color: white">
+                                <h2><fa-icon [icon]="faPhotoVideo"></fa-icon> Mídia</h2>
+                                <hr style="background-color: white" />
+
+                                <h5 style="display: inline;">Posters <span style="color: rgb(92,184,92);">{{ movie.images.posters.length != 0 ? movie.images.posters.length : '0'}}</span></h5>
+                                  
+                                <div id="posters">
+                                    <div *ngIf="movie.images.posters.length == 0">
+                                        <a  style="color: #ffbb33; text-decoration: none;">
+                                            <b>Nenhum poster disponível</b>
+                                        </a>
+                                    </div>
+                                    <a *ngIf="movie.images.posters.length != 0" (click)="open(posters)" class="media" href="javascript:;"><b>Ver posters</b></a>
+                                    <ng-template #posters let-modal>
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modal-basic-title">Posters</h4>
+                                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <ngb-carousel>
+                                                <ng-template ngbSlide *ngFor="let item of movie.images.posters">
+                                                    <div class="picsum-img-wrapper" >
+                                                        <img [src]="getImage(item.file_path, 500)" style="margin: auto; width: auto; display: block;" >
+                                                    </div>
+                                                </ng-template>
+                                            </ngb-carousel>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" (click)="modal.close()">Fechar</button>
+                                        </div>
+                                    </ng-template>
+                                    
+                                </div>
+
+                                <h5 style="display: inline;">Imagens de fundo <span id="total-backdrops" style="color: rgb(92,184,92);">{{ movie.images.backdrops.length != 0 ? movie.images.backdrops.length : '0'}}</span></h5>
+                                
+                                <div id="backdrops">
+
+                                        <div *ngIf="movie.images.backdrops.length == 0">
+                                                <a  style="color: #ffbb33; text-decoration: none;">
+                                                    <b>Nenhuma imagem de fundo disponível</b>
+                                                </a>
+                                        </div>
+                                        <a *ngIf="movie.images.backdrops.length != 0" (click)="open(backdrops)" class="media" href="javascript:;"><b>Ver imagens de fundo</b></a>
+                                        <ng-template #backdrops let-modal>
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="modal-basic-title">Imagens de fundo</h4>
+                                                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <ngb-carousel>
+                                                    <ng-template ngbSlide *ngFor="let item of movie.images.backdrops">
+                                                        <div class="picsum-img-wrapper" >
+                                                            <img [src]="getImage(item.file_path, 1280)">
+                                                        </div>
+                                                    </ng-template>
+                                                </ngb-carousel>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" (click)="modal.close()">Fechar</button>
+                                            </div>
+                                        </ng-template>
+                                </div>
+
+
+                                <h5 style="display: inline;">Vídeos <span id="total-videos" style="color: rgb(92,184,92);">{{ movie.videos.results.length != 0 ? movie.videos.results.length : '0'}}</span></h5>
+
+                                <div id="videos" class="fade-list">
+                                        <div *ngIf="movie.images.posters.length == 0">
+                                        <a  style="color: #ffbb33; text-decoration: none;">
+                                            <b>Nenhum video disponível</b>
+                                        </a>
+                                    </div>
+                                    <a *ngIf="movie.images.posters.length != 0" (click)="open(videos)" class="media" href="javascript:;"><b>Ver Videos</b></a>
+                                    <ng-template #videos let-modal>
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modal-basic-title">Videos</h4>
+                                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <ngb-carousel>
+                                                <ng-template ngbSlide *ngFor="let item of movie.videos.results, let i = index;">
+                                                    <div class="picsum-img-wrapper" >
+                                                            <iframe width="100%" height="645" [src]="key[i]">
+                                                            </iframe>
+                                                    </div>
+                                                </ng-template>
+                                            </ngb-carousel>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" (click)="modal.close()">Fechar</button>
+                                        </div>
+                                    </ng-template>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-12">
+                                <h2 style="color: white;"><fa-icon [icon]="faUsers"></fa-icon> Elenco</h2>
+                                <!-- <hr style="background-color: white" /> -->
+
+                                <div class="row">
+                                    <div class="col-12 col-sm-12">
+
+                                        <h4 class="text-center" *ngIf="movie.credits.cast.length == 0">
+                                            <fa-icon [icon]="faInfoCircle"  style="color: #5bc0de"></fa-icon>
+                                            <b style="color: #5bc0de"> Não há dados sobre o elenco.</b>
+                                        </h4>
+
+                                        <table class="table table-striped table-sm" style="color: white;" *ngIf="movie.credits.cast.length != 0">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Personagem</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr *ngFor="let item of cast">
+                                                <td style="vertical-align:middle !important;">
+                                                    <a [routerLink]="['/pessoa', item.id]" style="font-weight: bold; color: rgb(92,184,92); text-decoration: none;">
+                                                        <img [src]="getImage(item.profile_path, 185)" class="mr-2 rounded" style="width: 60px;">
+                                                        {{ item.name }}
+                                                    </a>
+                                                </td>
+                                                
+                                                <td style="vertical-align:middle !important;">{{ item.character }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                            
+                                        <div class="d-flex justify-content-center p-2" *ngIf="movie.credits.cast.length != 0">
+                                        <ngb-pagination [collectionSize]="movie.credits.cast.length" [(page)]="pageElenco" [pageSize]="pageSize" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="false">
+                                               
+                                        </ngb-pagination>
+                                        
+    
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 col-sm-12">
+                                <h2 style="color: white"><fa-icon [icon]="faUsers"></fa-icon> Equipe técnica</h2>
+   
+                                <div class="row">
+                                    <div class="col-12 col-sm-12">
+                                            <h4 class="text-center" *ngIf="movie.credits.crew.length == 0">
+                                                <fa-icon [icon]="faInfoCircle"  style="color: #5bc0de"></fa-icon>
+                                                <b style="color: #5bc0de"> Não há dados sobre a equipe técnica.</b>
+                                            </h4>
+
+                                            <table class="table table-striped table-sm" style="color: white;" *ngIf="movie.credits.crew.length != 0">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Cargo</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr *ngFor="let item of crew">
+                                                    <td style="vertical-align:middle !important;">
+                                                        <a [routerLink]="['/pessoa', item.id]" style="font-weight: bold; color: rgb(92,184,92); text-decoration: none;">
+                                                            <img [src]="getImage(item.profile_path, 185)" class="mr-2 rounded" style="width: 60px;">
+                                                            {{ item.name }}
+                                                        </a>
+                                                    </td>
+                                                    
+                                                    <td style="vertical-align:middle !important;">{{ item.job }}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                                
+                                            <div class="d-flex justify-content-center p-2" *ngIf="movie.credits.crew.length != 0">
+                                                <ngb-pagination [collectionSize]="movie.credits.crew.length" [(page)]="pageEquipeTecnica" [pageSize]="pageSize" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="false">
+                                                        
+                                                </ngb-pagination>
+
+                                            </div>
+    
+                                        </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-12 col-sm-12">
+                                <h2 style="color: white"><fa-icon [icon]="faThumbsUp"></fa-icon> Similares</h2>
+                                <hr style="background-color: white" />
+
+                                <div class="text-center" *ngIf="!similares?.results?.length && !requestingSimilars">
+                                    <h4><b style="color: #5bc0de"><fa-icon [icon]="faInfoCircle" style="color: #5bc0de"></fa-icon> Não há dados suficientes para sugerir filmes baseado neste.</b></h4>
+                                </div>
+
+                                <ngb-carousel *ngIf="similares?.results?.length">
+                                    <ng-template ngbSlide *ngFor="let item of similares.results">
+                                        <a href="filme/{{item.id}}">
+                                            <div class="picsum-img-wrapper" style="width:100%;height:0; padding-top:50%;position:relative;">
+                                                <img [src]="getImage(item.backdrop_path, 780)" style="position:absolute; top:0; left:0; width:100%; opacity: 0.7;" class="d-block w-100">
+                                            </div>
+                                            <div class="carousel-caption">
+                                                <h4>{{ item.title }}</h4>
+                                            <fa-icon [icon]="faStar"></fa-icon>{{ item.vote_average }}
+                                            </div>
+                                        </a>
+                                    </ng-template>
+                                </ngb-carousel>
+
+                            </div>
+                        </div>
+                        <!-- loader -->
+                        <div class="d-flex justify-content-center" *ngIf="requestingSimilars">
+                            <div class="spinner-grow text-light" role="status">
+                                <span class="sr-only"></span>
+                            </div>
+                        </div>
+                        <!-- loader -->
+                        <br>
+                        
+                        <div class="row">
+                            <div class="col-12 col-sm-12">
+                                <h2 style="color: white"><fa-icon [icon]="farThumbsUp"></fa-icon> Recomendações</h2>
+                                <hr style="background-color: white" />
+
+                                <div class="text-center" *ngIf="!recomendacoes?.results?.length && !requestingRecomendations">
+                                        <h4><b style="color: #5bc0de"><fa-icon [icon]="faInfoCircle" style="color: #5bc0de"></fa-icon> Não há dados suficientes para sugerir filmes baseado neste.</b></h4>
+                                </div>
+
+                                <ngb-carousel *ngIf="recomendacoes?.results?.length">
+                                        <ng-template ngbSlide *ngFor="let item of recomendacoes.results">
+                                            <a href="filme/{{item.id}}">
+                                                <div class="picsum-img-wrapper" style="width:100%;height:0; padding-top:50%;position:relative;">
+                                                    <img [src]="getImage(item.backdrop_path, 780)" style="position:absolute; top:0; left:0; width:100%; opacity: 0.7;" class="d-block w-100">
+                                                </div>
+                                                <div class="carousel-caption">
+                                                    <h4>{{ item.title }}</h4>
+                                                <fa-icon [icon]="faStar"></fa-icon>{{ item.vote_average }}
+                                                </div>
+                                            </a>
+                                        </ng-template>
+                                </ngb-carousel>
+
+                            </div>
+                        </div>
+                        <!-- loader -->
+                        <div class="d-flex justify-content-center" *ngIf="requestingRecomendations">
+                            <div class="spinner-grow text-light" role="status">
+                                <span class="sr-only"></span>
+                            </div>
+                        </div>
+                        <!-- loader -->
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

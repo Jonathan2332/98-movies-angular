@@ -1,0 +1,16 @@
+<div class="my-container">
+    <div [ngClass]="{ 'fade-list-in': requesting, 'fade-list-out': !requesting }" >
+        <app-movie *ngIf="(type != 'search' && type != 'pessoa') || (type == 'search' && searchParam[0] != 'person')" [list]="list" [requesting]="requesting" [idType]="genre_id ? genre_id : 0"></app-movie>
+        <app-person *ngIf="type == 'pessoa' || (type == 'search' && searchParam[0] == 'person')" [list]="list" [requesting]="requesting"></app-person>
+    </div>
+
+    <br>
+    <div *ngIf="requesting" class="d-flex justify-content-center">
+        <div id="loader" class="spinner-border text-light" role="status"></div>
+    </div>
+    <br>
+    <div class="d-flex justify-content-center">
+        <ngb-pagination [disabled]="requesting" [collectionSize]="total_results" [(page)]="pageNumber" [pageSize]="results_size" [maxSize]="isMobile ? 3 : 5" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+    </div>
+    <br>
+</div>

@@ -1,0 +1,78 @@
+.my-container{
+    background-color: white!important;
+ }
+.painel
+{
+    border-color:black;
+}
+.painel-bg-img
+{
+    background-size:     cover!important;                      
+    background-repeat:   no-repeat!important;
+    background-position: center center!important;
+    background-color: rgba(255,255,255,0.85)!important;
+    background-blend-mode: lighten!important;
+}
+.painel-bg-dark
+{
+    background-color: #262626;
+}
+a.media:link {
+    color: rgb(92,184,92);
+}
+a.media:visited {
+    color: rgb(92,184,92);
+}
+
+a.media:hover {
+    color: rgb(92,184,92);
+}
+
+a.media:active {
+    color: rgb(92,184,92);
+}
+h2
+{
+    font-size: 31px!important;
+}
+ngb-pagination ::ng-deep ul > li:not(.active) > a {
+    background: #555!important; /* Old browsers */
+    color: white;
+    border: 1px solid #222;
+    font-size: 28px;
+}
+
+ngb-pagination ::ng-deep ul > li.active > a {
+    background: rgb(92,184,92)!important;
+	color: #FFF!important;
+	border-color: #444!important;
+	box-shadow: 0 1px 0 rgba(255,255,255,1), 0 0 2px rgba(0, 0, 0, 0.3) inset!important;
+    font-size: 28px!important;
+    border: 1px solid #222!important;
+}
+
+ngb-pagination ::ng-deep a:not(.active) {
+    border: 1px solid #222!important;
+}
+
+ngb-pagination ::ng-deep a {
+    float: left!important;
+	color: white!important;
+	font-size: 28px!important;
+	line-height: 38px!important;
+	font-weight: normal!important;
+	text-align: center!important;
+	border: 1px solid #222!important;
+	min-width: 14px!important;
+	padding: 0 7px!important;
+	margin: 0 5px 0 0!important;
+	border-radius: 3px!important;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.2)!important;
+	background: #555!important; /* Old browsers */
+	background: -moz-linear-gradient(top, #555 0%, #333 100%)!important; /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#555), color-stop(100%,#333))!important; /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #555 0%,#333 100%)!important; /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #555 0%,#333 100%)!important; /* Opera11.10+ */
+	background: -ms-linear-gradient(top, #555 0%,#333 100%); /* IE10+ */
+	background: linear-gradient(to top, #555 0%,#333 100%)!important; /* W3C */
+}

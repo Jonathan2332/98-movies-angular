@@ -1,0 +1,38 @@
+<div class="my-container">
+    <app-navbar tema="light"></app-navbar>
+        <div class="container" style="margin-top: 40px;">
+            <div class="card" style="border-color: red;">
+            <div class="card-header painel"><fa-icon [icon]="faUsers"></fa-icon> Gerenciar Usuários</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th colspan="2" width="10%" class="text-center">Opções</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Email</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let item of usuarios, let i = index">
+                            <td class="text-center">
+                                    <a [routerLink]="['/usuario/alterar']" [queryParams]="{'id': item.idUsuario}"><fa-icon [icon]="faUserEdit" class="text-success"></fa-icon></a>
+                            </td>
+                            <td class="text-center">
+                                <a (click)="check(item.idUsuario, i)" href="javascript:;"><fa-icon [icon]="faUserTimes" class="text-danger"></fa-icon></a>
+                            </td>
+                            <td>{{ item.idUsuario }}</td>
+                            <td>{{ item.nome }}</td>
+                            <td>{{ item.email }}</td>
+                        </tr>
+                        </tbody>
+                    </table>            
+                    </div>
+                    <div *ngIf="requesting" class="d-flex justify-content-center">
+                        <div id="loader" class="spinner-border" role="status"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

@@ -1,1 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
+.menu-mobile {         
+    max-height: 200px;
+    overflow-y: auto;
+}
+.logo
+{
+    padding-top: 20px; 
+    width: 35%;
+    min-width: 500px;
+}
+.logoMobile
+{
+    padding-top: 20px; 
+    width: 35%;
+    min-width: 320px;
+}
+.custom-navbar
+{
+    background-color: transparent; 
+    position: fixed; 
+    top: 0; 
+    z-index: 99; 
+    transition: 0.4s; 
+    width: 100%;
+}
+.navbar-bg-custom-dark
+{
+    background-image: linear-gradient(rgb(92,184,92), #262626); 
+    padding-top: 70px;
+}
+.navbar-bg-custom-light
+{
+    background-image: linear-gradient(rgb(92,184,92), #fff); 
+    padding-top: 70px;
+}
+.loader-image {
+    background-repeat: no-repeat;
+    background-size: 250px;
+    background-position: center center;
+    background-image: url('assets/imgs/gifloader.gif');
+}
+.dark-modal .modal-content {
+    background-color: #292b2c!important;
+    color: white!important;
+}
+.dark-modal .close {
+    color: white!important;
+}
