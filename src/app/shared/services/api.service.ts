@@ -9,7 +9,7 @@ import { take } from 'rxjs/operators';
 export class ApiService {
 
   private _apiKey: string = 'cb6e8442bc390cb55c37de5073e3011f';
-  private _apiYoutube: string = 'https://www.youtube.com/embed/';
+  private _apiYoutube: string = 'https://www.youtube.com/watch?v=';
   private _apiLanguage: string = 'pt-BR';
   private _noPoster: string = '../assets/imgs/no-poster.png';
   private _noBackdrop: string = '../assets/imgs/no-backdrop.png';
@@ -224,6 +224,6 @@ export class ApiService {
   }
   getApiVideo(url)
   {
-    return `${this.apiYoutube}${url}`
+    return `${this.apiYoutube}${url}&autoplay=0`
   }
 }

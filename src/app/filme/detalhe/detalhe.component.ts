@@ -1,3 +1,4 @@
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { RestService } from './../../shared/services/rest.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -5,7 +6,7 @@ import { faStar, faUserAlt, faVideo, faPhotoVideo, faInfoCircle, faFilm, faClock
 import { faThumbsUp as farThumbsUp } from '@fortawesome/free-regular-svg-icons';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/shared/services/api.service';
-import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { DomSanitizer } from '@angular/platform-browser';
 import Swal from 'sweetalert2';
 import { SessionService } from 'src/app/shared/services/session.service';
@@ -55,6 +56,7 @@ export class DetalheComponent implements OnInit {
   pageElenco = 1;
   pageEquipeTecnica = 1;
   pageSize = 5;
+  isMobile: boolean;
 
   private _crew: any;
   private _cast: any;
@@ -81,9 +83,10 @@ export class DetalheComponent implements OnInit {
   }
   
   constructor(private route: ActivatedRoute, private apiService: ApiService, 
-    private sanitizer: DomSanitizer, private modalService: NgbModal,
-    private restService: RestService, private sessionService: SessionService) {
-   
+    private sanitizer: DomSanitizer,
+    private restService: RestService, private sessionService: SessionService,
+    private deviceService: DeviceDetectorService) {
+    this.isMobile = this.deviceService.isMobile();
   }
 
   @ViewChild('carousel', {static : true}) carousel: NgbCarousel;
@@ -105,10 +108,6 @@ export class DetalheComponent implements OnInit {
     if (this.pauseOnIndicator && !slideEvent.paused && slideEvent.source === NgbSlideEventSource.INDICATOR) {
       this.togglePaused();
     }
-  }
-
-  open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'xl', windowClass: 'dark-modal'});
   }
 
   ngOnInit() {

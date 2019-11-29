@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-detalhe',
@@ -28,10 +29,15 @@ export class DetalheComponent implements OnInit {
   pauseOnIndicator = false;
   pauseOnHover = true;
   showNavigationIndicators = false;
-  
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private modalService: NgbModal) {
 
-  }
+  isMobile:boolean;
+  
+  constructor(private route: ActivatedRoute, private apiService: ApiService, 
+    private deviceService: DeviceDetectorService) 
+    { 
+      this.isMobile = this.deviceService.isMobile(); 
+    }
+
 
   public get person(): any {
     return this._person;
@@ -59,10 +65,6 @@ export class DetalheComponent implements OnInit {
     if (this.pauseOnIndicator && !slideEvent.paused && slideEvent.source === NgbSlideEventSource.INDICATOR) {
       this.togglePaused();
     }
-  }
-
-  open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'xl', windowClass: 'dark-modal'});
   }
 
   ngOnInit() {

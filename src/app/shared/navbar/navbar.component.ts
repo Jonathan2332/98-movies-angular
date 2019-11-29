@@ -97,7 +97,8 @@ export class NavbarComponent implements OnInit {
 
   redirect(movie)
   {
-    this.router.navigate(['/filme/buscar'], { queryParams: { type: movie ? 'movie' : 'person', query: this.campoValorInput.nativeElement.value } });
+    let type = movie ? 'movie' : 'person';
+    window.location.href = '/filme/buscar?type=' + type + '&query=' + this.campoValorInput.nativeElement.value;
   }
 
 }

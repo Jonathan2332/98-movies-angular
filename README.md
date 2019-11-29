@@ -35,6 +35,7 @@ Foi criada uma **[API RESTful em PHP](https://github.com/Jonathan2332/api-rest-p
 * [ng2-truncate](https://github.com/yellowspot/ng2-truncate)
 * [ng-select](https://ng-select.github.io/ng-select#/data-sources)
 * [ngx-device-detector](https://www.npmjs.com/package/ngx-device-detector)
+* [Fancybox](http://fancyapps.com/fancybox/3/)
 * [Animate.css](https://daneden.github.io/animate.css/)
 * [SweetAlert2](https://sweetalert2.github.io/)
 * [Font Awesome](https://fontawesome.com/)

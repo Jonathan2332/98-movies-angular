@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-md-5 col-lg-4">
+                            <div class="col-md-5 col-lg-4 text-center">
                                 <img src="{{ getImage(movie.poster_path, 500) }}" style="margin-top: 15px; width: 225px; height: 350px; text-align: center;" class="img-rounded">
                             </div>
                             <div class="col-md-7 col-lg-8">
@@ -93,27 +93,13 @@
                                             <b>Nenhum poster disponível</b>
                                         </a>
                                     </div>
-                                    <a *ngIf="movie.images.posters.length != 0" (click)="open(posters)" class="media" href="javascript:;"><b>Ver posters</b></a>
-                                    <ng-template #posters let-modal>
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="modal-basic-title">Posters</h4>
-                                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <ngb-carousel>
-                                                <ng-template ngbSlide *ngFor="let item of movie.images.posters">
-                                                    <div class="picsum-img-wrapper" >
-                                                        <img [src]="getImage(item.file_path, 500)" style="margin: auto; width: auto; display: block;" >
-                                                    </div>
-                                                </ng-template>
-                                            </ngb-carousel>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" (click)="modal.close()">Fechar</button>
-                                        </div>
-                                    </ng-template>
+                                    <div *ngIf="movie.images.posters.length != 0">
+                                            <a *ngFor="let item of movie.images.posters, let i = index;" class="media" id="poster-{{ i }}" 
+                                            href="{{ getImage(item.file_path, 500) }}" data-fancybox="gallery-posters" [hidden]="i != 0">
+                                                <b>Ver posters</b>
+                                                <img src="{{ getImage(item.file_path, 500) }}" [hidden]="i == 0">
+                                            </a>
+                                    </div>
                                     
                                 </div>
 
@@ -126,60 +112,30 @@
                                                     <b>Nenhuma imagem de fundo disponível</b>
                                                 </a>
                                         </div>
-                                        <a *ngIf="movie.images.backdrops.length != 0" (click)="open(backdrops)" class="media" href="javascript:;"><b>Ver imagens de fundo</b></a>
-                                        <ng-template #backdrops let-modal>
-                                            <div class="modal-header">
-                                                <h4 class="modal-title" id="modal-basic-title">Imagens de fundo</h4>
-                                                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-                                                <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <ngb-carousel>
-                                                    <ng-template ngbSlide *ngFor="let item of movie.images.backdrops">
-                                                        <div class="picsum-img-wrapper" >
-                                                            <img [src]="getImage(item.file_path, 1280)">
-                                                        </div>
-                                                    </ng-template>
-                                                </ngb-carousel>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger" (click)="modal.close()">Fechar</button>
-                                            </div>
-                                        </ng-template>
+                                        <div *ngIf="movie.images.backdrops.length != 0">
+                                            <a *ngFor="let item of movie.images.backdrops, let i = index;" class="media" id="backdrop-{{ i }}" 
+                                            href="{{ getImage(item.file_path, 1280) }}" data-fancybox="gallery-backdrops" [hidden]="i != 0">
+                                                <b>Ver imagens de fundo</b>
+                                                <img src="{{ getImage(item.file_path, 1280) }}" [hidden]="i == 0">
+                                            </a>
+                                        </div>
                                 </div>
 
 
                                 <h5 style="display: inline;">Vídeos <span id="total-videos" style="color: rgb(92,184,92);">{{ movie.videos.results.length != 0 ? movie.videos.results.length : '0'}}</span></h5>
 
                                 <div id="videos" class="fade-list">
-                                        <div *ngIf="movie.images.posters.length == 0">
+                                        <div *ngIf="movie.videos.results.length == 0">
                                         <a  style="color: #ffbb33; text-decoration: none;">
                                             <b>Nenhum video disponível</b>
                                         </a>
                                     </div>
-                                    <a *ngIf="movie.images.posters.length != 0" (click)="open(videos)" class="media" href="javascript:;"><b>Ver Videos</b></a>
-                                    <ng-template #videos let-modal>
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="modal-basic-title">Videos</h4>
-                                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <ngb-carousel>
-                                                <ng-template ngbSlide *ngFor="let item of movie.videos.results, let i = index;">
-                                                    <div class="picsum-img-wrapper" >
-                                                            <iframe width="100%" height="645" [src]="key[i]">
-                                                            </iframe>
-                                                    </div>
-                                                </ng-template>
-                                            </ngb-carousel>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" (click)="modal.close()">Fechar</button>
-                                        </div>
-                                    </ng-template>
+                                    <div *ngIf="movie.videos.length != 0">
+                                        <a *ngFor="let item of movie.videos.results, let i = index;" class="media" id="video-{{ i }}" 
+                                        href="{{ key[i] }}" data-fancybox="gallery-videos" [hidden]="i != 0">
+                                            <b>Ver Videos</b>
+                                        </a>
+                                    </div>
                                 </div>
 
                             </div>
@@ -293,7 +249,8 @@
                                                 <img [src]="getImage(item.backdrop_path, 780)" style="position:absolute; top:0; left:0; width:100%; opacity: 0.7;" class="d-block w-100">
                                             </div>
                                             <div class="carousel-caption">
-                                                <h4>{{ item.title }}</h4>
+                                                <h4 *ngIf="!isMobile">{{ item.title }}</h4>
+                                                <h5 *ngIf="isMobile">{{ item.title }}</h5>
                                             <fa-icon [icon]="faStar"></fa-icon>{{ item.vote_average }}
                                             </div>
                                         </a>
@@ -327,7 +284,8 @@
                                                     <img [src]="getImage(item.backdrop_path, 780)" style="position:absolute; top:0; left:0; width:100%; opacity: 0.7;" class="d-block w-100">
                                                 </div>
                                                 <div class="carousel-caption">
-                                                    <h4>{{ item.title }}</h4>
+                                                    <h4 *ngIf="!isMobile">{{ item.title }}</h4>
+                                                    <h5 *ngIf="isMobile">{{ item.title }}</h5>
                                                 <fa-icon [icon]="faStar"></fa-icon>{{ item.vote_average }}
                                                 </div>
                                             </a>
@@ -335,6 +293,7 @@
                                 </ngb-carousel>
 
                             </div>
+
                         </div>
                         <!-- loader -->
                         <div class="d-flex justify-content-center" *ngIf="requestingRecomendations">

@@ -7,7 +7,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-md-5 col-lg-4">
+                                <div class="col-md-5 col-lg-4 text-center">
                                     
                                     <img src="{{ getImage(person.profile_path, 500) }}" style="margin-top: 15px; width: 250px; height: 375px;" class="img-rounded">
                                     
@@ -89,27 +89,13 @@
                                                 <b>Nenhuma foto disponível</b>
                                             </a>
                                         </div>
-                                        <a *ngIf="person.profiles.length != 0" (click)="open(photos)" class="media" href="javascript:;"><b>Ver fotos</b></a>
-                                        <ng-template #photos let-modal>
-                                            <div class="modal-header">
-                                                <h4 class="modal-title" id="modal-basic-title">Fotos</h4>
-                                                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-                                                <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <ngb-carousel>
-                                                    <ng-template ngbSlide *ngFor="let item of person.profiles">
-                                                        <div class="picsum-img-wrapper" >
-                                                            <img [src]="getImage(item.file_path, 500)" style="margin: auto; width: auto; display: block;" >
-                                                        </div>
-                                                    </ng-template>
-                                                </ngb-carousel>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger" (click)="modal.close()">Fechar</button>
-                                            </div>
-                                        </ng-template>
+                                        <div *ngIf="person.profiles.length != 0">
+                                            <a *ngFor="let item of person.profiles, let i = index;" class="media" id="photo-{{ i }}" 
+                                            href="{{ getImage(item.file_path, 500) }}" data-fancybox="gallery-photos" [hidden]="i != 0">
+                                                <b>Ver fotos</b>
+                                                <img src="{{ getImage(item.file_path, 500) }}" [hidden]="i == 0">
+                                            </a>
+                                        </div>
                                     </div>
                                     
                                     <br>
@@ -123,20 +109,20 @@
                                     <div *ngIf="person.cast.length != 0">
                                         <h4 style="color: white;"><fa-icon [icon]="faVideo"></fa-icon> Atuação</h4>
                                         <hr style="background-color: white" />
-                                        <table class="table table-hover table-dark">
+                                        <table class="table table-hover table-dark" [class.table-sm]="isMobile">
                                             <thead class="thead-dark">
                                                 <tr class="d-flex">
-                                                    <th class="col-2 col-sm-2 col-md-2 col-lg-2 text-center">Ano</th>
-                                                    <th class="col-8 col-sm-8 col-md-8 col-lg-9">Filme</th>
+                                                    <th class="col-sm-2 col-md-2 col-lg-2 text-center" [ngClass]="{'col-2': !isMobile, 'col-3': isMobile}">Ano</th>
+                                                    <th class="col-sm-8 col-md-8 col-lg-9" [ngClass]="{'col-8': !isMobile, 'col-7': isMobile}">Filme</th>
                                                     <th id="rate" class="col-2 col-sm-2 col-md-2 col-lg-1 text-center"><fa-icon [icon]="faStar"></fa-icon></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let item of person.cast" class="d-flex">
-                                                    <td class="text-center col-2 col-sm-2 col-md-2 col-lg-2">
+                                                    <td class="text-center col-sm-2 col-md-2 col-lg-2" [ngClass]="{'col-2': !isMobile, 'col-3': isMobile}">
                                                         {{ (item.release_date | date: 'yyyy') || '-'}}
                                                     </td>
-                                                    <td class="col-8 col-sm-8 col-md-8 col-lg-9">
+                                                    <td class="col-sm-8 col-md-8 col-lg-9" [ngClass]="{'col-8': !isMobile, 'col-7': isMobile}">
                                                         <a [routerLink]="['/filme', item.id]" style="font-weight: bold; color: white;">
                                                                 {{ item.title}} <div *ngIf="item.character.length != 0" style="font-weight: normal; display: inline;">como </div><div *ngIf="item.character.length != 0" style="color: rgb(92,184,92); font-weight: normal; display: inline;"> {{ item.character}}
                                                             </div>
@@ -152,20 +138,20 @@
                                     <div *ngIf="person.crew.length != 0">
                                             <h4 style="color: white;"><fa-icon [icon]="faBriefcase"></fa-icon> {{ person.crew.length == 0 ? 'Trabalhos' : 'Outros trabalhos' }}</h4>
                                             <hr style="background-color: white" />
-                                            <table class="table table-hover table-dark">
+                                            <table class="table table-hover table-dark" [class.table-sm]="isMobile">
                                                 <thead class="thead-dark">
                                                     <tr class="d-flex">
-                                                        <th class="col-2 col-sm-2 col-md-2 col-lg-2 text-center">Ano</th>
-                                                        <th class="col-8 col-sm-8 col-md-8 col-lg-9">Filme</th>
+                                                        <th class="col-sm-2 col-md-2 col-lg-2 text-center" [ngClass]="{'col-2': !isMobile, 'col-3': isMobile}">Ano</th>
+                                                        <th class="col-sm-8 col-md-8 col-lg-9" [ngClass]="{'col-8': !isMobile, 'col-7': isMobile}">Filme</th>
                                                         <th id="rate" class="col-2 col-sm-2 col-md-2 col-lg-1 text-center"><fa-icon [icon]="faStar"></fa-icon></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr *ngFor="let item of person.crew" class="d-flex">
-                                                        <td class="text-center col-2 col-sm-2 col-md-2 col-lg-2">
+                                                        <td class="text-center col-sm-2 col-md-2 col-lg-2" [ngClass]="{'col-2': !isMobile, 'col-3': isMobile}">
                                                             {{ (item.release_date | date:'yyyy') || '-' }}
                                                         </td>
-                                                        <td class="col-8 col-sm-8 col-md-8 col-lg-9">
+                                                        <td class="col-sm-8 col-md-8 col-lg-9" [ngClass]="{'col-8': !isMobile, 'col-7': isMobile}">
                                                             <a [routerLink]="['/filme', item.id]" style="font-weight: bold; color: white;">
                                                                     {{ item.title}} <div *ngIf="item.job.length != 0" style="font-weight: normal; display: inline;">como </div><div *ngIf="item.job.length != 0" style="color: rgb(92,184,92); font-weight: normal; display: inline;"> {{ item.job}}
                                                                 </div>

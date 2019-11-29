@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
   }
   ngOnInit(){
       this.preferencias = this.sessionService.getPreferencias();
+      window.scrollTo(0,0);
   }
   ngOnDestroy() {
     this.inscricao.unsubscribe();
