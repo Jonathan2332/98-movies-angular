@@ -1,4 +1,4 @@
-# ![](src/assets/imgs/logo-full.png?raw=true "98 Movies")
+# ![](/src/assets/imgs/logo-full.png?raw=true "98 Movies")
 Este projeto foi idealizado apenas para fazer parte do meu portfólio como demonstração de experiência e aprendizado.
 
 **[Este projeto também está disponível em PHP](https://github.com/Jonathan2332/98-movies-php)**
